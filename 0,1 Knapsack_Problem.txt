@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int knapsack(int n, int c, int val[], int wt[])	//no. of items, knapsack size
+{
+	int i, j; 
+	int dp[n+1][c+1];
+
+	for(i=0; i<=n; i++)
+	{
+		for(j=0; j<=c; j++)
+		{
+			if(i==0 || j==0)
+				dp[i][j]=0;
+
+			else if (wt[i-1] <= j)
+			{
+				dp[i][j] = max(val[i-1] + dp[i-1][j-wt[i-1]], dp[i-1][j]);
+			}
+
+			else
+				dp[i][j] = dp[i-1][j];
+		}
+	}
+
+	return dp[n][c];
+}
+
+int main()
+{	
+	int N, W;	// no. of items and size of knapsack
+	cin >> N >> W;
+
+	int price[N];
+	for(int x=0; x<N; x++)
+		cin >> price[x];
+
+	int weight[N]; 
+	for(int k=0; k<N; k++)
+		cin >> weight[k];
+
+	int max_profit = knapsack(N, W, price, weight);
+
+	cout << "Max profit for 0/1 knapsack problems is: " << max_profit; 
+
+}

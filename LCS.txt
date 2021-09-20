@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int lcs(string A, string B, int m, int n)
+{
+	int i, j;
+	int dp[m+1][n+1];
+
+	for(i=0; i<=m; i++)
+	{
+		for(j=0; j<=n; j++)
+		{
+			if(i==0 || j==0)
+				dp[i][j]=0;
+			else if (A[i-1] == B[j-1])
+			{
+				dp[i][j] = dp[i-1][j-1] + 1;
+			}
+			else
+				dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+		}
+	}
+
+	return dp[m][n];
+}
+
+int main()
+{	
+	int M, N;	// length of two sequences
+	cin >> M >> N;
+
+	string S1, S2;
+	cin >> S1 >> S2;
+
+	int len = lcs(S1, S2, M, N);
+
+	cout << "Length of Longest common subsequence of A and B is: " << len; 
+
+}
